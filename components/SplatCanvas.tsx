@@ -16,7 +16,6 @@ const SplatCanvas = ({ splatUrl }: SplatCanvasProps) => {
         // i want the camera to rotate around the center of the scene
         // so i need to find the center of the scene
 
-        const center = new SPLAT.Vector3();
         const initSplatScene = async () => {
             renderer.current = new SPLAT.WebGLRenderer();
             controls.current = new SPLAT.OrbitControls(camera.current!, renderer.current!.domElement);
