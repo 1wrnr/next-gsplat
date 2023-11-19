@@ -1,15 +1,19 @@
 'use client'
 
+import { useWebGLRenderer } from '@/lib/hooks/useWebGLRenderer';
 import * as SPLAT from 'gsplat'
 import { useEffect, useRef, useState } from 'react';
 interface SplatCanvasProps {
     splatUrl?: string
 }
 const SplatCanvas = ({ splatUrl }: SplatCanvasProps) => {
+
+    const [hasWindow, setHasWindow] = useState(false);
     const canvasRef = useRef<HTMLDivElement | null>(null);
     const scene = useRef<SPLAT.Scene>(new SPLAT.Scene());
     const camera = useRef<SPLAT.Camera>(new SPLAT.Camera());
-    const renderer = useRef<SPLAT.WebGLRenderer | null>(null);
+    const renderer = useWebGLRenderer();
+    // const renderer = useRef<SPLAT.WebGLRenderer | null>(null);
     const controls = useRef<SPLAT.OrbitControls | null>(null);
 
     useEffect(() => {
@@ -17,27 +21,25 @@ const SplatCanvas = ({ splatUrl }: SplatCanvasProps) => {
         // so i need to find the center of the scene
 
         const initSplatScene = async () => {
-            renderer.current = new SPLAT.WebGLRenderer();
             controls.current = new SPLAT.OrbitControls(camera.current!, renderer.current!.domElement);
 
             const url =
-                "https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/stump/stump-7k.splat"
-            // 'https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/bonsai/bonsai-7k.splat';
-            // 'https://huggingface.co/datasets/dylanebert/3dgs/raw/main/counter/counter-7k.splat';
+                'https://huggingface.co/datasets/dylanebert/3dgs/resolve/main/bonsai/bonsai-7k.splat';
 
             await SPLAT.Loader.LoadAsync(url, scene.current, () => { });
 
-            // const handleResize = () => {
-            //     renderer.setSize(window.innerWidth, window.innerHeight);
-            // }
+            const handleResize = () => {
+                if (typeof window !== 'undefined' && renderer.current !== null) {
+                    renderer.current.setSize(window.innerWidth, window.innerHeight);
+                }
+            }
             const frame = () => {
+                handleResize();
                 controls.current!.update();
                 renderer.current!.render(scene.current!, camera.current!);
-
                 requestAnimationFrame(frame);
             };
 
-            // handleResize();
             requestAnimationFrame(frame);
         };
 
@@ -54,14 +56,14 @@ const SplatCanvas = ({ splatUrl }: SplatCanvasProps) => {
                 canvasRef.current.appendChild(renderer.current.domElement);
             }
         }
-        return () => {
-
-        };
     }, []);
 
     return (
-        <div className="border-2 border-red-500 border-dotted" ref={canvasRef}>
-        </div>
+        <>
+            {hasWindow &&
+                <div className="border-2 border-red-500 border-dotted" ref={canvasRef} />
+            }
+        </>
     )
 }
 

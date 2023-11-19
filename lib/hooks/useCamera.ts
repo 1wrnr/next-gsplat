@@ -13,7 +13,7 @@ useEffect(() => {
         // camera.current.fov = fov;
         camera.current.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z, 1);
         camera.current.rotation.set(cameraRotation.x, cameraRotation.y, cameraRotation.z, 1);
-    }, [near, far, fov, cameraPosition, cameraRotation]);
+    }, [near, far, cameraPosition, cameraRotation]);
     return camera;
 
 };
