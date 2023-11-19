@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
+    "@uidotdev/usehooks": "^2.4.1",
     "framer-motion": "^10.16.5",
     "gsplat": "^0.2.7",
     "next": "14.0.2",

@@ -1,6 +1,7 @@
 'use client'
 import { useControls } from "@/lib/stores/useControls";
 import ScalarSlider from "./ui/slider"
+import { Slider } from "@nextui-org/react";
 
 const Controls = () => {
 
@@ -17,7 +18,7 @@ const Controls = () => {
     return (
         <div className="fixed top-2 right-2 p-2 rounded bg-black text-white border cursor-pointer">
             Controls
-            <ScalarSlider
+            {/* <ScalarSlider
                 label="Adjust field of view"
                 step={1}
                 maxValue={120}
@@ -25,7 +26,25 @@ const Controls = () => {
                 defaultValue={80}
                 classNames=""
                 onChange={setFov}
+            /> */}
+
+
+
+
+
+
+            <Slider
+                aria-label="Volume"
+                size="lg"
+                color="secondary"
+                onChangeEnd={setFov}
+                className="max-w-md"
             />
+
+
+
+
+
             <div className="border p-4 bg-white border-gray-500/60 text-black font-mono min-w-max">
                 <table className="border-collapse border  p-2 border-gray-800/80">
                     <tr className="border p-2 border-gray-800/80">
@@ -50,7 +69,7 @@ const Controls = () => {
                     </tr>
                     <tr className="border  p-2 border-gray-800/80">
                         <td className={td}>Camera FOV:</td>
-                        <td className={td}>{fov.toFixed(4)}</td>
+                        <td className={td}>{fov}</td>
                     </tr>
                 </table>
             </div>

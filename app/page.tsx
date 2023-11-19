@@ -1,5 +1,6 @@
 import Canvas from '@/components/Canvas';
 import Controls from '@/components/Controls'
+import SplatCanvas from '@/components/SplatCanvas';
 
 interface HomeProps {
   splatUrl?: string
@@ -17,8 +18,9 @@ export default function Home({ splatUrl }: HomeProps) {
   return (
     <>
       <main className="">
-        <Controls />
-        <Canvas cameraParams={cameraParams} splatUrl={url} />
+        {/* <Controls /> */}
+        {/* <Canvas cameraParams={cameraParams} splatUrl={url} /> */}
+        <SplatCanvas splatUrl={url} />
       </main>
     </>
   )
